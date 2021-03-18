@@ -1,0 +1,38 @@
+{
+  "name": "dhealth-research",
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "description": "DHealth Research Tools",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "rxjs": "^6.6.6",
+    "symbol-hd-wallets": "^0.14.0",
+    "symbol-sdk": "^0.23.2",
+    "symbol-uri-scheme": "^0.6.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^6.8.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^7.0.0",
+    "typescript": "^3.9.9",
+    "utf8": "3.0.0",
+    "process": "^0.11.10"
+  },
+  "scripts": {
+    "lint": "eslint src/ --ext .ts && eslint test/ --ext .ts",
+    "lint:fix": "eslint src/ --ext .ts --fix && eslint test/ --ext .ts --fix",
+    "build": "rimraf dist && mkdir dist && tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usingblockchain/dhealth-research.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usingblockchain/dhealth-research/issues"
+  },
+  "homepage": "https://github.com/usingblockchain/dhealth-research#readme"
+}
