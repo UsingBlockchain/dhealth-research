@@ -7,9 +7,12 @@
  * @license     AGPL-3.0
  */
 export abstract class Research {
+
+  public asynchronous: boolean = false
+
   public constructor() {}
 
   public abstract execute(
     args: any[]
-  ): number
+  ): any
 }

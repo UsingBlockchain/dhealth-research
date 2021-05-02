@@ -6,9 +6,16 @@ This tool suite is powered by [Using Blockchain Ltd](https://using-blockchain.or
 
 ## Usage
 
+1. **Vanity** account generator:
+
 ```bash
 $ npm i && npm run build
 $ npm run start vanity greg 1
+```
+
+2. **Convert** (public|private) keys:
+```bash
+$ npm run start convert 999F1CE7A7C9B37E00990478BCC5742225DADCF4EE2E8BE54EDE90BEE791A32E 104
 ```
 
 ## Sponsor us
