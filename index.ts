@@ -12,7 +12,9 @@ import { NetworkByte } from './src/NetworkByte'
 import { Vanity } from './src/Vanity'
 import { Converter } from './src/Converter'
 import { HarvesterExtract } from './src/HarvesterExtract'
+import { RemoteToMainAccounts } from './src/RemoteToMainAccounts'
 import { AirdropAccounts } from './src/AirdropAccounts'
+import { TransactionPayload } from './src/TransactionPayload'
 
 let research: Research,
     args: any[] = []
@@ -39,10 +41,20 @@ else if (process.argv.includes('extract')) {
   args = process.argv.slice(process.argv.indexOf('extract')+1)
   research = new HarvesterExtract()
 }
+else if (process.argv.includes('remotes')) {
+
+  args = process.argv.slice(process.argv.indexOf('remotes')+1)
+  research = new RemoteToMainAccounts()
+}
 else if (process.argv.includes('airdrop')) {
 
   args = process.argv.slice(process.argv.indexOf('airdrop')+1)
   research = new AirdropAccounts()
+}
+else if (process.argv.includes('payload')) {
+
+  args = process.argv.slice(process.argv.indexOf('payload')+1)
+  research = new TransactionPayload()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')

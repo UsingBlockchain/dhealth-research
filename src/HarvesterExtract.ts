@@ -34,7 +34,7 @@ export class HarvesterExtract extends Research {
         file: string = args.length > 2 ? args[2] : 'data/harvesters.' + Date.now() + '.json'
 
     const output = file,
-          endpoint = 'http://dual-001.symbol.ninja:3000',
+          endpoint = 'http://ngl-dual-001.symbolblockchain.io:3000',
           factory = new RepositoryFactoryHttp(endpoint, {
             websocketUrl: endpoint.replace('http', 'ws') + '/ws',
           }),
