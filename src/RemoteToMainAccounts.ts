@@ -6,8 +6,7 @@
  * @author      Grégory Saive for Using Blockchain Ltd <greg@ubc.digital>
  * @license     AGPL-3.0
  */
-import { Address, NetworkType, Crypto, Account, RepositoryFactoryHttp, BlockOrderBy, AccountType } from 'symbol-sdk'
-import { from } from 'rxjs'
+import { Address, RepositoryFactoryHttp, AccountType } from 'symbol-sdk'
 const fs = require('fs')
 
 // internal dependencies

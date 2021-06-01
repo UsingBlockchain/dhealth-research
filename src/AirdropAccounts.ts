@@ -20,7 +20,6 @@ import {
   TransferTransaction,
   UInt64,
 } from 'symbol-sdk'
-import { from } from 'rxjs'
 const fs = require('fs')
 
 // internal dependencies
@@ -113,7 +112,7 @@ export class AirdropAccounts extends Research {
       const transactions: Transaction[] = []
       for (let i = 0, m = airdropees.length; i < m; i++) {
         transactions.push(TransferTransaction.create(
-          Deadline.create(epochAdjustment, 48),
+          Deadline.create(epochAdjustment, 4),
           airdropees[i],
           [new Mosaic(new NamespaceId('dhealth.dhp'), UInt64.fromUint(10001000000)),],
           EmptyMessage,
@@ -124,7 +123,7 @@ export class AirdropAccounts extends Research {
 
       // bundle the 100 transfers
       const aggregate = AggregateTransaction.createComplete(
-        Deadline.create(epochAdjustment, 48),
+        Deadline.create(epochAdjustment, 4),
         transactions,
         networkType,
         [], // "unsigned"
@@ -135,7 +134,8 @@ export class AirdropAccounts extends Research {
       const signedContract: SignedTransaction = airdroper.sign(aggregate, generationHash)
       store.push({
         index: cnt,
-        contract: signedContract.payload
+        contract: signedContract.payload,
+        hash: signedContract.hash,
       })
 
       at += 100

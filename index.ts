@@ -15,6 +15,7 @@ import { HarvesterExtract } from './src/HarvesterExtract'
 import { RemoteToMainAccounts } from './src/RemoteToMainAccounts'
 import { AirdropAccounts } from './src/AirdropAccounts'
 import { TransactionPayload } from './src/TransactionPayload'
+import { BroadcastPayloads } from './src/BroadcastPayloads'
 
 let research: Research,
     args: any[] = []
@@ -55,6 +56,11 @@ else if (process.argv.includes('payload')) {
 
   args = process.argv.slice(process.argv.indexOf('payload')+1)
   research = new TransactionPayload()
+}
+else if (process.argv.includes('broadcast')) {
+
+  args = process.argv.slice(process.argv.indexOf('broadcast')+1)
+  research = new BroadcastPayloads()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')

@@ -6,7 +6,7 @@
  * @author      Grégory Saive for Using Blockchain Ltd <greg@ubc.digital>
  * @license     AGPL-3.0
  */
-import { NetworkType, Crypto, Account } from 'symbol-sdk'
+import { NetworkType, Account } from 'symbol-sdk'
 
 // internal dependencies
 import { Research } from './Research'

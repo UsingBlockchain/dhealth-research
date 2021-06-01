@@ -38,6 +38,7 @@ export class TransactionPayload extends Research {
       console.log('tx.networkType     : ', tx.networkType)
       console.log('tx.deadline        : ', tx.deadline.toLocalDateTime(1616978397).toString()) // NETWORK EPOCH ADJUSTMENT
       console.log('tx.maxFee          : ', tx.maxFee.compact())
+      console.log('tx.transactionInfo : ', JSON.stringify(tx.transactionInfo))
 
       if ([
         TransactionType.AGGREGATE_COMPLETE,
