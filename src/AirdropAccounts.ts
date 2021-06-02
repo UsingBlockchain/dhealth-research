@@ -88,7 +88,8 @@ export class AirdropAccounts extends Research {
         err: string[] = [],
         at = 0,
         cnt = 0,
-        store = []
+        store = [],
+        known: string[] = []
 
     console.log('Found ' + json.length + ' elligible airdrop accounts')
 
@@ -111,6 +112,12 @@ export class AirdropAccounts extends Research {
       // 1 aggregate per group of airdropees
       const transactions: Transaction[] = []
       for (let i = 0, m = airdropees.length; i < m; i++) {
+
+        // :WARN: Never payout twice
+        if (known.includes(airdropees[i].plain())) {
+          continue;
+        }
+
         transactions.push(TransferTransaction.create(
           Deadline.create(epochAdjustment, 4),
           airdropees[i],
@@ -119,6 +126,7 @@ export class AirdropAccounts extends Research {
           networkType,
           UInt64.fromUint(0),
         ).toAggregate(airdroper.publicAccount))
+        known.push(airdropees[i].plain())
       }
 
       // bundle the 100 transfers
