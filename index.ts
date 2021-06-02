@@ -16,6 +16,7 @@ import { RemoteToMainAccounts } from './src/RemoteToMainAccounts'
 import { AirdropAccounts } from './src/AirdropAccounts'
 import { TransactionPayload } from './src/TransactionPayload'
 import { BroadcastPayloads } from './src/BroadcastPayloads'
+import { CheckDuplicates } from './src/CheckDuplicates'
 
 let research: Research,
     args: any[] = []
@@ -61,6 +62,11 @@ else if (process.argv.includes('broadcast')) {
 
   args = process.argv.slice(process.argv.indexOf('broadcast')+1)
   research = new BroadcastPayloads()
+}
+else if (process.argv.includes('duplicates')) {
+
+  args = process.argv.slice(process.argv.indexOf('duplicates')+1)
+  research = new CheckDuplicates()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')
