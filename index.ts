@@ -17,6 +17,7 @@ import { AirdropAccounts } from './src/AirdropAccounts'
 import { TransactionPayload } from './src/TransactionPayload'
 import { BroadcastPayloads } from './src/BroadcastPayloads'
 import { CheckDuplicates } from './src/CheckDuplicates'
+import { MetadataKeys } from './src/MetadataKeys'
 
 let research: Research,
     args: any[] = []
@@ -67,6 +68,11 @@ else if (process.argv.includes('duplicates')) {
 
   args = process.argv.slice(process.argv.indexOf('duplicates')+1)
   research = new CheckDuplicates()
+}
+else if (process.argv.includes('metadata')) {
+
+  args = process.argv.slice(process.argv.indexOf('metadata')+1)
+  research = new MetadataKeys()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')
