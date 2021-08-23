@@ -29,7 +29,7 @@ export class Converter extends Research {
         net = args.length > 2 ? args[2] : NetworkType.MAIN_NET,
         more = args.length > 3 ? args.slice(3) : []
 
-    if (type !== 'pub' && type !== 'priv') {
+    if (type !== 'pub' && type !== 'priv' && type !== 'raw') {
       console.log('Missing type argument, one of "pub" and "priv" expected. Using "pub" as a default.')
       type = 'pub'
     }
@@ -45,11 +45,17 @@ export class Converter extends Research {
         console.log('pubk: ' + acct.publicKey)
         console.log('pubk: ' + acct.privateKey)
       }
-      else {
+      else if (type === 'pub') {
         const addr = Address.createFromPublicKey(input, net)
         console.log('')
         console.log('addr: ' + addr.plain())
         console.log('pubk: ' + input)
+      }
+      else if (type === 'raw') {
+        const addr = Address.createFromEncoded(input)
+        console.log('')
+        console.log('addr: ' + addr.plain())
+        console.log('raw : ' + input)
       }
     }
     return 0
