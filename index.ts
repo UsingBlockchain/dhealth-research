@@ -19,6 +19,7 @@ import { BroadcastPayloads } from './src/BroadcastPayloads'
 import { CheckDuplicates } from './src/CheckDuplicates'
 import { MetadataKeys } from './src/MetadataKeys'
 import { AirdropChecks } from './src/AirdropChecks'
+import { VotingUpgradeChecks } from './src/VotingUpgradeChecks'
 
 let research: Research,
     args: any[] = []
@@ -79,6 +80,11 @@ else if (process.argv.includes('airdropee')) {
 
   args = process.argv.slice(process.argv.indexOf('airdropee')+1)
   research = new AirdropChecks()
+}
+else if (process.argv.includes('voting')) {
+
+  args = process.argv.slice(process.argv.indexOf('voting')+1)
+  research = new VotingUpgradeChecks()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')

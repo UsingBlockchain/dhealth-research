@@ -18,6 +18,11 @@ $ npm run start vanity greg 1
 $ npm run start convert 999F1CE7A7C9B37E00990478BCC5742225DADCF4EE2E8BE54EDE90BEE791A32E 104
 ```
 
+3. **Check eligibility** for dHealth Airdrop:
+```bash
+$ npm run start airdropee NB72EM6TTSX72O47T3GQFL345AB5WYKIDODKPPYW
+```
+
 ## Sponsor us
 
 | Platform | Sponsor Link |
