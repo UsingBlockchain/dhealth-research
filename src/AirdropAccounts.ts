@@ -13,7 +13,7 @@ import {
   Deadline,
   EmptyMessage,
   Mosaic,
-  NamespaceId,
+  MosaicId,
   RepositoryFactoryHttp,
   SignedTransaction,
   Transaction,
@@ -50,22 +50,29 @@ export class AirdropAccounts extends Research {
     args: any[] = []
   ): Promise<number> {
 
-    if (args.length !== 3) {
-      console.error('Usage: npm run start airdrop <INPUT_FILENAME> <OUTPUT_FILENAME> <PRIVATE_KEY>')
+    if (args.length !== 5) {
+      console.error('Usage: npm run start airdrop <INPUT_FILENAME> <OUTPUT_FILENAME> <PRIVATE_KEY> <ABS_AMOUNT> <BATCH_SIZE>')
       return 1
     }
 
     let input = args.length ? args[0] : 'data/remotes.json',
         file: string = args.length > 1 ? args[1] : 'data/airdrop.' + Date.now() + '.json',
-        privateKey: string = args.length > 2 ? args[2] : null
+        privateKey: string = args.length > 2 ? args[2] : null,
+        amountSent: number = args.length > 3 ? args[3] : 0,
+        batchSize: number = args.length > 4 ? parseInt(args[4]) : 10;
 
     if (! fs.existsSync(input)) {
       console.error('File "remotes.json" not found. Please, run "npm run start remotes" first.')
       return 2
     }
+
     else if (!privateKey || privateKey.length !== 64) {
       console.error('Please, provide a valid private key as a third argument.')
       return 3
+    }
+
+    if (batchSize < 0 || batchSize > 100) {
+      batchSize = 10;
     }
 
     const output = file,
@@ -97,6 +104,8 @@ export class AirdropAccounts extends Research {
       store = JSON.parse(fs.readFileSync(output))
     }
 
+    // JSON file structure example:
+    // [{"main": "NA5ZUGHBUUHO63E5OQQND7CYK7UZ3HVQONR2O6Y"}]
     do {
       if (cnt > 0 && cnt % 5 === 0) {
         console.log("Waiting 1 second")
@@ -105,9 +114,11 @@ export class AirdropAccounts extends Research {
       }
 
       // 100 airdrops at a time
-      const airdropees = json.slice(at, at+100).map(
+      const airdropees = json.slice(at, at+batchSize).map(
         (u: any) => Address.createFromRawAddress(u.main)
       )
+
+      console.log(`Now creating transactions for ${airdropees.length} elligible airdrop accounts`)
 
       // 1 aggregate per group of airdropees
       const transactions: Transaction[] = []
@@ -121,7 +132,7 @@ export class AirdropAccounts extends Research {
         transactions.push(TransferTransaction.create(
           Deadline.create(epochAdjustment, 4),
           airdropees[i],
-          [new Mosaic(new NamespaceId('dhealth.dhp'), UInt64.fromUint(10001000000)),],
+          [new Mosaic(new MosaicId('39E0C49FA322A459'), UInt64.fromUint(amountSent)),],
           EmptyMessage,
           networkType,
           UInt64.fromUint(0),
@@ -129,7 +140,9 @@ export class AirdropAccounts extends Research {
         known.push(airdropees[i].plain())
       }
 
-      // bundle the 100 transfers
+      console.log(`Created ${transactions.length} inner transactions`)
+
+      // bundle the `batchSize` transfers
       const aggregate = AggregateTransaction.createComplete(
         Deadline.create(epochAdjustment, 4),
         transactions,
@@ -146,7 +159,7 @@ export class AirdropAccounts extends Research {
         hash: signedContract.hash,
       })
 
-      at += 100
+      at += batchSize
       cnt++
     }
     while(at < json.length)
