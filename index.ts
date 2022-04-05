@@ -20,6 +20,7 @@ import { CheckDuplicates } from './src/CheckDuplicates'
 import { MetadataKeys } from './src/MetadataKeys'
 import { AirdropChecks } from './src/AirdropChecks'
 import { VotingUpgradeChecks } from './src/VotingUpgradeChecks'
+import { NetworkApiVotingBalances } from './src/NetworkApiVotingBalances'
 
 let research: Research,
     args: any[] = []
@@ -85,6 +86,11 @@ else if (process.argv.includes('voting')) {
 
   args = process.argv.slice(process.argv.indexOf('voting')+1)
   research = new VotingUpgradeChecks()
+}
+else if (process.argv.includes('netapi-voter-balances')) {
+
+  args = process.argv.slice(process.argv.indexOf('netapi-voter-balances')+1)
+  research = new NetworkApiVotingBalances()
 }
 else {
   console.error('Research type not identified (try with "byte" or "vanity")')
